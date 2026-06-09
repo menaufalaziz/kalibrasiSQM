@@ -1,0 +1,49 @@
+# Light Pollution Monitoring Data Format 1.0
+# URL: http://www.darksky.org/measurements
+# Number of header lines: 37
+# This data is released under the following license: ODbL 1.0 http://opendatacommons.org/licenses/odbl/summary/
+# Device type: SQM-LU
+# Instrument ID: 2
+# Data supplier: OAIL
+# Location name: ITERA
+# Position (lat, lon, elev(m)): -5, 105, 0
+# Local timezone: Asia/Jakarta
+# Time Synchronization: 0
+# Moving / Stationary position: 0
+# Moving / Fixed look direction: 0
+# Number of channels: 1
+# Filters per channel: 1
+# Measurement direction per channel: 1
+# Field of view (degrees): 10
+# Number of fields per line: 6
+# SQM serial number: 6881
+# SQM hardware identity: B001XNNV
+# SQM firmware version: 4-3-80
+# SQM cover offset value: 0
+# SQM readout test ix (Information): i,00000004,00000003,00000080,00006881
+# SQM readout test rx (Reading): r, 17.34m,0000000011Hz,0000041330c,0000000.090s, 028.0C
+# SQM readout test cx (Calibration): c,00000019.96m,0000190.216s, 020.3C,00000008.71m, 020.6C
+# SQM readout test Ix (Report Interval): 0000000000s,0000000000s,00000000.00m,00000000.00m
+# Comment: Diambil oleh atikah
+# Comment: 
+# Comment: 
+# Comment: 
+# Comment: 
+# UDM version: 1.0.0.375
+# UDM setting: Logged continuously every 1 minute on the minute,Threshold = 0 mpsas.
+# blank line
+# UTC Date & Time, Local Date & Time, Temperature, Counts, Frequency, MSAS
+# YYYY-MM-DDTHH:mm:ss.fff;YYYY-MM-DDTHH:mm:ss.fff;Celsius;number;Hz;mag/arcsec^2
+# END OF HEADER
+2026-03-03T12.59.05.911;2026-03-03T19.59.05.911;28.0;41241;11;17.34
+2026-03-03T13.00.00.138;2026-03-03T20.00.00.138;28.0;0;6110;10.50
+2026-03-03T13.01.00.132;2026-03-03T20.01.00.132;28.0;5879;78;15.22
+2026-03-03T13.02.00.139;2026-03-03T20.02.00.139;27.7;5187;89;15.08
+2026-03-03T13.03.00.122;2026-03-03T20.03.00.122;27.7;4503;102;14.93
+2026-03-03T13.04.00.088;2026-03-03T20.04.00.088;27.3;4297;107;14.88
+2026-03-03T13.05.00.110;2026-03-03T20.05.00.110;27.0;5762;81;15.20
+2026-03-03T13.06.00.131;2026-03-03T20.06.00.131;27.0;5381;85;15.13
+2026-03-03T13.07.00.108;2026-03-03T20.07.00.108;26.7;5198;89;15.08
+2026-03-03T13.08.00.135;2026-03-03T20.08.00.135;26.4;9901;47;15.78
+2026-03-03T13.09.00.130;2026-03-03T20.09.00.130;26.4;9549;49;15.75
+2026-03-03T13.11.02.172;2026-03-03T20.11.02.172;26.1;6429;71;15.32

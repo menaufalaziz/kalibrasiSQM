@@ -1,0 +1,40 @@
+# Light Pollution Monitoring Data Format 1.0
+# URL: http://www.darksky.org/measurements
+# Number of header lines: 37
+# This data is released under the following license: ODbL 1.0 http://opendatacommons.org/licenses/odbl/summary/
+# Device type: SQM-LU
+# Instrument ID: 2
+# Data supplier: OAIL
+# Location name: ITERA
+# Position (lat, lon, elev(m)): -5, 105, 0
+# Local timezone: Asia/Jakarta
+# Time Synchronization: 0
+# Moving / Stationary position: 0
+# Moving / Fixed look direction: 0
+# Number of channels: 1
+# Filters per channel: 1
+# Measurement direction per channel: 1
+# Field of view (degrees): 10
+# Number of fields per line: 6
+# SQM serial number: 6881
+# SQM hardware identity: B001XNNV
+# SQM firmware version: 4-3-80
+# SQM cover offset value: 0
+# SQM readout test ix (Information): i,00000004,00000003,00000080,00006881
+# SQM readout test rx (Reading): r, 17.36m,0000000011Hz,0000042079c,0000000.091s, 028.3C
+# SQM readout test cx (Calibration): c,00000019.96m,0000190.216s, 020.3C,00000008.71m, 020.6C
+# SQM readout test Ix (Report Interval): 0000000000s,0000000000s,00000000.00m,00000000.00m
+# Comment: Diambil oleh atikah
+# Comment: 
+# Comment: 
+# Comment: 
+# Comment: 
+# UDM version: 1.0.0.375
+# UDM setting: Logged continuously every 1 minute on the minute,Threshold = 0 mpsas.
+# blank line
+# UTC Date & Time, Local Date & Time, Temperature, Counts, Frequency, MSAS
+# YYYY-MM-DDTHH:mm:ss.fff;YYYY-MM-DDTHH:mm:ss.fff;Celsius;number;Hz;mag/arcsec^2
+# END OF HEADER
+2026-03-03T12.55.24.262;2026-03-03T19.55.24.262;28.3;40783;11;17.32
+2026-03-03T12.56.00.098;2026-03-03T19.56.00.098;28.3;42722;11;17.37
+2026-03-03T12.57.00.115;2026-03-03T19.57.00.115;28.3;32889;13;17.09
