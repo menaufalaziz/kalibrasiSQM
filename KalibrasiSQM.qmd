@@ -1,0 +1,207 @@
+---
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    toc-title: "Contents"
+    number-sections: true
+    theme: cosmo
+    title: "Kalibrasi SQM"
+    subtitle: ""
+    author: 
+      - name: "Naufal Aziz Ferdian"
+        affiliation: "Itera"
+      - name: "Co-Author Name"
+        affiliation: "Their Organization"
+    date: today
+    embeded-source: true
+  pdf:
+    toc: false
+    number-sections: true
+    documentclass: report
+    geometry:
+      - top=30mm
+      - left=20mm
+      - right=20mm
+      - bottom=30mm
+---
+
+
+<!-- Cover page for HTML only -->
+::: {.content-visible when-format="html"}
+<div style="text-align: center; padding: 50px 0;">
+
+# Kalibrasi SQM {.unnumbered}
+
+##  {.unnumbered}
+
+<div style="margin: 60px 0;">
+![Itera Logo](logo/Itera.jpeg){width=50%}
+</div>
+
+<div style="margin-top: 80px;">
+**Published by:**
+
+OAIL  
+
+**Authors:**
+
+Naufal Aziz Ferdian  
+Co-Author Name
+
+
+</div>
+
+</div>
+
+---
+
+:::
+
+# Executive Summary {.unnumbered}
+
+This section provides a brief overview of the document's key findings and recommendations.
+
+# Introduction
+
+This is the introduction section of your document.
+
+## Purpose
+
+Explain the purpose of this document.
+
+## Scope
+
+Define the scope and boundaries.
+
+# Background
+
+Provide relevant background information.
+
+# Main Content
+
+## import library
+
+```{python}
+#| label: Import-library
+
+import pandas as pd
+import re
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import matplotlib.gridspec as gridspec
+from scipy import stats
+from datetime import datetime
+import ephem
+import warnings
+warnings.filterwarnings("ignore")
+
+# ---Konfigurasi Matplotlib----------------------
+plt.rcParams.update({
+  "figure.facecolor": "white",
+  "axes.facecolor": "#f8f9fa",
+  "axes.grid": True,
+  "grid.alpha": 0.4,
+  "axes.spines.top": False,
+  "axes.spines.right":False,
+  "font.size": 11,
+})
+
+ZENITH_COLOR = "#2563eb"
+MOON_COLOR = "#d97706"
+DIFF_COLOR = "#059669"
+```
+
+
+```{python}
+#| label: load-data
+FILE_ZENITH = "KalibrasiSQMLaptopNaufal(Zenith).csv"
+FILE_BULAN = "atikah/4.dat"
+
+# Koordinat lokasi pengamatan
+LAT_OBS = "-5.21375"
+LON_OBS = "105.18512"
+ELEV_OBS = 98 # mdpl
+
+```
+
+## SQM Bulan
+
+```{python}
+#| label: load-data-sql-bulan
+
+dfbulan = pd.read_csv("atikah/4.dat", 
+                 sep=";", 
+                 header = None,
+                 skiprows=37,
+                 names=["datetimes_utc", "datetime_local", "temp_c", "counts", "hz", "mpsas"]
+)
+
+
+# Konversi data
+dfbulan['mpsas_smooth'] = dfbulan['mpsas'].rolling(window=12, center=True, min_periods=3).median()
+dfbulan['timestamp'] = pd.to_datetime(dfbulan['datetime_local'], format = "%Y-%m-%dT%H.%M.%S.%f")
+
+dfbulan.head()
+```
+
+### SQM Zenith
+
+```{python}
+#|label: load-data-sql-zenith
+
+dfzenith = pd.read_csv("KalibrasiSQMLaptopNaufal(Zenith).csv", 
+                 sep=",", 
+                 header = None,
+                 names=["timestamp", "payload"]
+)
+
+# Eksttrak
+dfzenith[["mpsas", "hz", "counts", "exposure_s", "temp_c"]] = dfzenith["payload"].str.extract(
+  r"([\d.]+)m,\s*([\d.]+)Hz,\s*([\d.]+)c,\s*([\d.]+)s,\s*([\d.]+)C"
+)
+
+# Konversi Data
+dfzenith["timestamp"] = pd.to_datetime(dfzenith["timestamp"])
+dfzenith["mpsas"] = dfzenith["mpsas"].astype(float)
+dfzenith["hz"] = dfzenith["hz"].astype(float)
+dfzenith["counts"] = dfzenith["counts"].astype(float)
+dfzenith["exposure_s"] = dfzenith["exposure_s"].astype(float)
+dfzenith["temp_c"] = dfzenith["temp_c"].astype(float)
+
+
+dfzenith = dfzenith.drop(columns=["payload"])
+
+
+
+dfzenith['mpsas_smooth'] = dfzenith['mpsas'].rolling(window=12, center=True, min_periods=3).median()
+
+
+dfzenith.head()
+
+```
+
+## Visualisasi
+````{python}
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), sharex  = False)
+
+# Panel 1
+ax1.scatter(dfzenith['timestamp'], dfzenith['mpsas_smooth'], s=3, alpha=0.3, color='GREEN')
+ax1.plot(dfzenith['timestamp'], dfzenith['mpsas_smooth'], color='GREEN', lw=1.8)
+ax1.set_title("SQM Zenith", fontsize=11)
+ax1.set_ylabel("MPSAS (mag/arcsec^2)")
+ax1.invert_yaxis()
+ax1.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+
+# Panel 2
+ax2.scatter(dfbulan['timestamp'], dfbulan['mpsas'], s=3, alpha=0.3, color='BLACK')
+ax2.plot(dfbulan['timestamp'], dfbulan['mpsas_smooth'], color='BLACK', lw=1.8)
+ax2.set_title("SQM Bulan", fontsize=11)
+ax2.set_ylabel("MPSAS (mag/arcsec^2)")
+ax2.invert_yaxis()
+ax2.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+
+
+plt.tight_layout()
+````
+
